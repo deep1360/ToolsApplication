@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "598384640657",
+    "firebase_url": "https://toolapp-ccbdb.firebaseio.com",
+    "project_id": "toolapp-ccbdb",
+    "storage_bucket": "toolapp-ccbdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598384640657:android:bdae578d52b0f668873530",
+        "android_client_info": {
+          "package_name": "com.example.toolsapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598384640657-obcsv26b4am5293d5h8tkqf1paepe0qp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHrB6xdsGAywOciAPxNIHpn-cXSztWi44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598384640657-obcsv26b4am5293d5h8tkqf1paepe0qp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
