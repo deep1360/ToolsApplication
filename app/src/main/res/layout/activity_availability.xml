@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AvailabilityActivity"
+    android:orientation="vertical">
+
+
+    <ImageView
+
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/wrench"
+        android:tint="@color/colorAccent"
+        android:id="@+id/toolImageView"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolName"
+        android:layout_marginTop="15dp"
+        android:textSize="20dp"
+        android:text="Tool Name"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolOwner"
+        android:layout_marginTop="15dp"
+        android:textSize="20dp"
+        android:text="Tool Owner Name"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Emailtoolowner"
+        android:layout_marginTop="15dp"
+        android:textSize="20dp"
+        android:text="Tool Owner Email"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ToolStatus"
+        android:layout_marginTop="15dp"
+        android:textSize="20dp"
+        android:text="Tool Status"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/toolBorrowButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Borrow Tool"
+        android:layout_margin="20dp"
+        android:background="@color/colorAccent"/>
+
+    <Button
+        android:id="@+id/AddButtonFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Add To Favourite"
+        android:layout_margin="20dp"
+        android:background="@color/colorAccent"/>
+
+</LinearLayout>
