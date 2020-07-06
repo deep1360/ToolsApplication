@@ -66,7 +66,25 @@ public class BorrowToolActivity extends AppCompatActivity {
                             Date current_date = sdf.parse(sdf.format(new Date()));
 
                             if (date1.equals(current_date) | date1.after(current_date)) {
-                               Toast.makeText(BorrowToolActivity.this,"Allow To Borrow",Toast.LENGTH_LONG).show();
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                Map<String, Object> borrowData = new HashMap<>();
+                                borrowData.put("tool_id", ID);
+                                borrowData.put("user_id", myId);
+                                borrowData.put("owner_id", USERID);
+                                borrowData.put("return_date",date);
+
+                                db.collection("borrows").add(borrowData).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(BorrowToolActivity.this,"You have borrowed tool!",Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(BorrowToolActivity.this,MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    }
+                                });
                             } else {
                                 dateOfReturn.setError("Enter Valid Date");
                                 dateOfReturn.requestFocus();
