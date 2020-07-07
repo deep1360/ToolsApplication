@@ -31,7 +31,17 @@ public class LoginActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(email.getText().toString().trim().equals("")){
+                    email.setError("Empty Field!");
+                    email.requestFocus();
+                }
+                else if(password.getText().toString().trim().equals("")){
+                    password.setError("Empty Field!");
+                    password.requestFocus();
+                }
+                else {
                     LoginUser();
+                }
             }
         });
     }
