@@ -85,29 +85,44 @@ public class AvailabilityActivity extends AppCompatActivity {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 String myid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                Map<String, Object> fav = new HashMap<>();
-                fav.put("userid", myid);
-                fav.put("toolid", toolid);
+                favButton.setEnabled(false);
+                final String myid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                 db.collection("favourites")
-                        .add(fav)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                favButton.setEnabled(true);
-                                Toast.makeText(AvailabilityActivity.this,"Added To Favourite",Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                favButton.setEnabled(true);
-                                Toast.makeText(AvailabilityActivity.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        .whereEqualTo("userid",myid).whereEqualTo("toolid",toolid)
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.getResult().size()>0){
+                            favButton.setEnabled(true);
+                            Toast.makeText(AvailabilityActivity.this,"Tool Is Already In Favourites!",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Map<String, Object> fav = new HashMap<>();
+                            fav.put("userid", myid);
+                            fav.put("toolid", toolid);
+
+                            db.collection("favourites")
+                                    .add(fav)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            favButton.setEnabled(true);
+                                            Toast.makeText(AvailabilityActivity.this,"Added To Favourite",Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            favButton.setEnabled(true);
+                                            Toast.makeText(AvailabilityActivity.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                    }
+                });
+
             }
         });
 
