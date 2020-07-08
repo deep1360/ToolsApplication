@@ -58,7 +58,7 @@ public class BorrowToolActivity extends AppCompatActivity {
                         dateOfReturn.setError("Enter Date!");
                         dateOfReturn.requestFocus();
                     } else {
-                        String date = dateOfReturn.getText().toString().trim();
+                        final String date = dateOfReturn.getText().toString().trim();
                         try {
                             Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 
@@ -66,22 +66,39 @@ public class BorrowToolActivity extends AppCompatActivity {
                             Date current_date = sdf.parse(sdf.format(new Date()));
 
                             if (date1.equals(current_date) | date1.after(current_date)) {
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                Map<String, Object> borrowData = new HashMap<>();
-                                borrowData.put("tool_id", ID);
-                                borrowData.put("user_id", myId);
-                                borrowData.put("owner_id", USERID);
-                                borrowData.put("return_date",date);
+                                borrowbtn.setEnabled(false);
+                                final FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                
+                                Map<String, Object> tool = new HashMap<>();
+                                tool.put("tool_name", TOOLNAME);
+                                tool.put("tool_desc", DETAILS);
+                                tool.put("user_id", USERID);
+                                tool.put("available",false);
 
-                                db.collection("borrows").add(borrowData).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                db.collection("tools").document(ID).set(tool).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                        if (task.isSuccessful()){
-                                            Toast.makeText(BorrowToolActivity.this,"You have borrowed tool!",Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(BorrowToolActivity.this,MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+
+                                            String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                            Map<String, Object> borrowData = new HashMap<>();
+                                            borrowData.put("tool_id", ID);
+                                            borrowData.put("user_id", myId);
+                                            borrowData.put("owner_id", USERID);
+                                            borrowData.put("return_date",date);
+
+                                            db.collection("borrows").add(borrowData).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                    if (task.isSuccessful()){
+                                                        borrowbtn.setEnabled(true);
+                                                        Toast.makeText(BorrowToolActivity.this,"You have borrowed tool!",Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(BorrowToolActivity.this,MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                            });
                                         }
                                     }
                                 });
