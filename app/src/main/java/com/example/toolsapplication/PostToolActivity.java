@@ -41,6 +41,7 @@ public class PostToolActivity extends AppCompatActivity {
                 } else if (ediDesc.getText().toString().trim().equals("")) {
                     ediDesc.setError("Empty Field!");
                 } else {
+                    PostButton.setEnabled(false);
                     String tool_name = editToolName.getText().toString().trim().toUpperCase();
                     String tool_desc = ediDesc.getText().toString().trim();
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -57,12 +58,15 @@ public class PostToolActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
+                                    PostButton.setEnabled(true);
                                     Toast.makeText(PostToolActivity.this,"Tool Posted Successfully!",Toast.LENGTH_LONG).show();
+                                    finish();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    PostButton.setEnabled(true);
                                     Toast.makeText(PostToolActivity.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
                                 }
                             });
